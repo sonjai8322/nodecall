@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <script src="./socket.io-1.4.5.js"></script>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="./socket.io-1.4.5.js"></script>
     <script>
-        var socket = io('http://sjhost.sytes.net:8000');
+        var socket = io('http://localhost:8000');
     </script>
 </head>
+
 <body>
 
-<div class="container">
-  <h2>Alerts</h2>
-  <div class="alert alert-success" id="result">
-    ...
-  </div>
-  <!--
+    <div class="container">
+        <h2>Alerts</h2>
+        <div class="alert alert-success" id="result">
+            ...
+        </div>
+        <!--
   <div class="alert alert-info">
     <strong>Info!</strong> This alert box could indicate a neutral informative change or action.
   </div>
@@ -30,23 +32,29 @@
     <strong>Danger!</strong> This alert box could indicate a dangerous or potentially negative action.
   </div>
 -->
-</div>
+    </div>
 
 </body>
 
 <script>
-    socket.on('new message', function(msg) {
-        console.log("new message!");
+    socket.on('new_user', function(msg) {
+        console.log("New User!");
         console.log(msg);
         //update(msg);
     });
 
-    socket.on('new_data', function(msg) {
-        console.log("new_data!");
+    socket.on('add', function(msg) {
+        console.log("Add Data!");
         console.log(msg);
-        $("#result").html(JSON.stringify(msg.fields));
+        $("#result").html('add' + JSON.stringify(msg.fields));
         //update(msg);
     });
-
+    socket.on('edit', function(msg) {
+        console.log("Edit Data!");
+        console.log(msg);
+        $("#result").html('edit' + JSON.stringify(msg.fields));
+        //update(msg);
+    });
 </script>
+
 </html>

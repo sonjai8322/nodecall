@@ -1,38 +1,70 @@
 var http = require('http'),
-	PORT = 8000;
+    PORT = 8013;
+
+var request = require('request');
 
 var server = http.createServer(function(req, res) {});
-var io = require('socket.io').listen(server);
 
-io.on('connection', (socket) => {
-  
-  io.emit('new user', "New User!");
-  console.log("New User!");
-/*
-  socket.on('noti message', msg => {
-    io.emit('new message', msg);
-  });
-*/
+setInterval(function() {
+    request('https://isuandok.med.cmu.ac.th/apps/iTransfer/logs_monitor?db_name=gateway-isuandok', function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log(body) // Show the HTML for the Google homepage. 
+        } else {
+            console.log("Error " + response.statusCode)
+        }
+    });
 
-});
+    request('https://isuandok.med.cmu.ac.th/apps/iTransfer/logs_monitor?db_name=gateway-hosweb', function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log(body) // Show the HTML for the Google homepage. 
+        } else {
+            console.log("Error " + response.statusCode)
+        }
+    });
 
-// Define MySQL listener
-var MysqlEvents = require('mysql-events');
-var dsn = {
-    host: 'localhost',
-    user: 'admin',
-    password: '1150'
-}
-var MysqlEventWatcher = MysqlEvents(dsn);
+    request('https://isuandok.med.cmu.ac.th/apps/iTransfer/logs_monitor?db_name=iroute', function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log(body) // Show the HTML for the Google homepage. 
+        } else {
+            console.log("Error " + response.statusCode)
+        }
+    });
 
-// Set watcher to database
-var watcher = MysqlEventWatcher.add('test.users', function(oldRow, newRow) {
-    if(oldRow === null) {
-       // io.emit('new_data', newRow.fields.value);
-        io.emit('new_data', newRow);
-    }
-});
+    request('https://isuandok.med.cmu.ac.th/apps/iTransfer/logs_monitor?db_name=isuandok-connect', function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log(body) // Show the HTML for the Google homepage. 
+        } else {
+            console.log("Error " + response.statusCode)
+        }
+    });
+
+    request('https://isuandok.med.cmu.ac.th/apps/iTransfer/logs_monitor?db_name=isuandok-ipatient', function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log(body) // Show the HTML for the Google homepage. 
+        } else {
+            console.log("Error " + response.statusCode)
+        }
+    });
+
+    request('https://isuandok.med.cmu.ac.th/apps/iTransfer/logs_monitor?db_name=isuandok-opr', function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log(body) // Show the HTML for the Google homepage. 
+        } else {
+            console.log("Error " + response.statusCode)
+        }
+    });
+
+    request('https://isuandok.med.cmu.ac.th/apps/iTransfer/logs_monitor?db_name=gateway-isuandok', function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log(body) // Show the HTML for the Google homepage. 
+        } else {
+            console.log("Error " + response.statusCode)
+        }
+    });
+
+}, 60 * 1000 * 15); //15 นาที
+
 
 server.listen(PORT, function() {
-	console.log('Server is running on port ' + PORT + '...');
+    console.log('Server is running on port ' + PORT + '...');
 });
